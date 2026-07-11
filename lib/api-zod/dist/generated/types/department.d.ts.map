@@ -1,0 +1,1 @@
+{"version":3,"file":"department.d.ts","sourceRoot":"","sources":["../../../src/generated/types/department.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAEH,MAAM,WAAW,UAAU;IACzB,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,MAAM,CAAC;IACb,IAAI,EAAE,MAAM,CAAC;IACb,gBAAgB;IAChB,OAAO,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IACxB,YAAY,CAAC,EAAE,MAAM,CAAC;CACvB"}

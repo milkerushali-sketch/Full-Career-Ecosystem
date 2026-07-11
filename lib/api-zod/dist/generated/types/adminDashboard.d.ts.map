@@ -1,0 +1,1 @@
+{"version":3,"file":"adminDashboard.d.ts","sourceRoot":"","sources":["../../../src/generated/types/adminDashboard.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAEH,MAAM,WAAW,cAAc;IAC7B,UAAU,EAAE,MAAM,CAAC;IACnB,aAAa,EAAE,MAAM,CAAC;IACtB,aAAa,EAAE,MAAM,CAAC;IACtB,cAAc,EAAE,MAAM,CAAC;IACvB,gBAAgB,EAAE,MAAM,CAAC;IACzB,YAAY,EAAE,MAAM,CAAC;IACrB,cAAc,CAAC,EAAE,MAAM,EAAE,CAAC;CAC3B"}
