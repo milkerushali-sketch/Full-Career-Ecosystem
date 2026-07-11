@@ -1,0 +1,32 @@
+
+> @workspace/api-server@0.0.0 dev /home/runner/workspace/artifacts/api-server
+> export NODE_ENV=development && pnpm run build && pnpm run start
+
+
+> @workspace/api-server@0.0.0 build /home/runner/workspace/artifacts/api-server
+> node ./build.mjs
+
+node:internal/modules/package_json_reader:316
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'esbuild' imported from /home/runner/workspace/artifacts/api-server/build.mjs
+[90m    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:316:9)[39m
+[90m    at packageResolve (node:internal/modules/esm/resolve:768:81)[39m
+[90m    at moduleResolve (node:internal/modules/esm/resolve:858:18)[39m
+[90m    at defaultResolve (node:internal/modules/esm/resolve:990:11)[39m
+[90m    at #cachedDefaultResolve (node:internal/modules/esm/loader:718:20)[39m
+[90m    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:735:38)[39m
+[90m    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:764:52)[39m
+[90m    at #resolve (node:internal/modules/esm/loader:700:17)[39m
+[90m    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:620:35)[39m
+[90m    at ModuleJob.syncLink (node:internal/modules/esm/module_job:143:33)[39m {
+  code: [32m'ERR_MODULE_NOT_FOUND'[39m
+}
+
+Node.js v24.13.0
+[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 1.[39m
+[43m[30m WARN [39m[49m  Local package.json exists, but node_modules missing, did you mean to install?
+[41m[30m ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL [39m[49m [31m@workspace/api-server@0.0.0 dev: `export NODE_ENV=development && pnpm run build && pnpm run start`[39m
+[31mExit status 1[39m
+[43m[30m WARN [39m[49m  Local package.json exists, but node_modules missing, did you mean to install?

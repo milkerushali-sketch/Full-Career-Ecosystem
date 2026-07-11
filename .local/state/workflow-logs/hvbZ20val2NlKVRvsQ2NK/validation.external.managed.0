@@ -1,0 +1,36 @@
+VERDICT: REJECTED
+The task is not complete because the login demo-credential fix is still functionally incorrect for fresh setups.
+
+Critical findings:
+- The seeded auth flow enforces real passwords (`bcrypt.compare`), but the login page still does not present complete usable demo credentials (it shows only account emails) and also shows a misleading “Use any password” hint on the forgot-password link. On a fresh import, this creates immediate login confusion/failure for users who rely on on-page demo guidance.
+- This is a direct miss against the stated task scope (“fix login page demo credential display”), so it is a blocking requirement gap even though backend setup and API generation changes compile.
+- Build/typecheck pass, and route wiring/schema/client generation are broadly coherent; the blocker is the user-facing auth onboarding behavior.
+
+Security: none observed at blocking severity in this diff.
+
+Next actions:
+1. Update the login UI demo section to show complete credentials (email + password for student/officer/admin) that match the seed script.
+2. Remove or correct the “Use any password” messaging so it reflects actual authentication behavior.
+3. Smoke-test fresh setup flow end-to-end (seeded login from UI) before resubmitting.
+
+Memory note: `.agents/memory/placepro-seed.md` and related setup/security notes contain highly code-derivable operational details and step-by-step runbook content; keep memory focused on durable decisions/lessons rather than implementation/run commands.
+
+VERDICT: REJECTED
+VERDICT: REJECTED
+The task is not complete because the login demo-credential fix is still functionally incorrect for fresh setups.
+
+Critical findings:
+- The seeded auth flow enforces real passwords (`bcrypt.compare`), but the login page still does not present complete usable demo credentials (it shows only account emails) and also shows a misleading “Use any password” hint on the forgot-password link. On a fresh import, this creates immediate login confusion/failure for users who rely on on-page demo guidance.
+- This is a direct miss against the stated task scope (“fix login page demo credential display”), so it is a blocking requirement gap even though backend setup and API generation changes compile.
+- Build/typecheck pass, and route wiring/schema/client generation are broadly coherent; the blocker is the user-facing auth onboarding behavior.
+
+Security: none observed at blocking severity in this diff.
+
+Next actions:
+1. Update the login UI demo section to show complete credentials (email + password for student/officer/admin) that match the seed script.
+2. Remove or correct the “Use any password” messaging so it reflects actual authentication behavior.
+3. Smoke-test fresh setup flow end-to-end (seeded login from UI) before resubmitting.
+
+Memory note: `.agents/memory/placepro-seed.md` and related setup/security notes contain highly code-derivable operational details and step-by-step runbook content; keep memory focused on durable decisions/lessons rather than implementation/run commands.
+
+VERDICT: REJECTED

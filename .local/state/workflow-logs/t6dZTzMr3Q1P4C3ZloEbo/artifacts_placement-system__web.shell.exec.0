@@ -1,0 +1,315 @@
+
+> @workspace/placement-system@0.0.0 dev /home/runner/workspace/artifacts/placement-system
+> vite --config vite.config.ts --host 0.0.0.0
+
+[replit-cartographer] Loaded @theme tokens from /home/runner/workspace/artifacts/placement-system/src/index.css
+
+  [32m[1mVITE[22m v7.3.6[39m  [2mready in [0m[1m751[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m20641[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.24.0.2:[1m20641[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m4:23:46 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/auth/login.tsx, /src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m4:28:16 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/auth/login.tsx, /src/index.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m4:28:19 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/auth/login.tsx, /src/index.css[22m [33m(x3)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m4:46:17 AM[22m [36m[1m[vite][22m[39m [32mvite.config.ts changed, restarting server...[39m
+[replit-cartographer] Loaded @theme tokens from /home/runner/workspace/artifacts/placement-system/src/index.css
+[2m4:46:17 AM[22m [36m[1m[vite][22m[39m server restarted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m4:57:47 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m4:57:50 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:22:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/auth/register.tsx, /src/pages/auth/login.tsx, /src/pages/student/skills.tsx, /src/pages/student/dashboard.tsx, /src/pages/student/projects.tsx, /src/pages/student/academics.tsx, /src/pages/student/profile.tsx, /src/pages/student/internships.tsx, /src/pages/student/certifications.tsx, /src/pages/student/coding-profiles.tsx, /src/lib/auth.tsx, /src/pages/student/readiness.tsx, /src/pages/student/companies.tsx, /src/pages/student/notifications.tsx, /src/pages/student/recommendations.tsx, /src/pages/officer/analytics.tsx, /src/pages/officer/companies.tsx, /src/pages/student/resume.tsx, /src/pages/officer/dashboard.tsx, /src/pages/officer/students.tsx, /src/pages/officer/interviews.tsx, /src/pages/admin/dashboard.tsx, /src/pages/officer/jobs.tsx, /src/pages/admin/departments.tsx, /src/pages/admin/users.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:22:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/auth/register.tsx, /src/pages/auth/login.tsx, /src/pages/student/skills.tsx, /src/pages/student/dashboard.tsx, /src/pages/student/projects.tsx, /src/pages/student/academics.tsx, /src/pages/student/profile.tsx, /src/pages/student/internships.tsx, /src/pages/student/certifications.tsx, /src/pages/student/coding-profiles.tsx, /src/lib/auth.tsx, /src/pages/student/readiness.tsx, /src/pages/student/companies.tsx, /src/pages/student/notifications.tsx, /src/pages/student/recommendations.tsx, /src/pages/officer/analytics.tsx, /src/pages/officer/companies.tsx, /src/pages/student/resume.tsx, /src/pages/officer/dashboard.tsx, /src/pages/officer/students.tsx, /src/pages/officer/interviews.tsx, /src/pages/admin/dashboard.tsx, /src/pages/officer/jobs.tsx, /src/pages/admin/departments.tsx, /src/pages/admin/users.tsx[22m [33m(x2)[39m
+[2m5:22:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:22:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist? [33m(x2)[39m
+[2m5:22:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:22:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist? [33m(x2)[39m
+[2m5:22:57 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/lib/auth.tsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:22:57 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/pages/auth/register.tsx, /src/pages/auth/login.tsx, /src/components/layout/dashboard-layout.tsx[22m
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747377527,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:49:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747378071,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:55:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747378102,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:55:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747379071,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:55:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:23:47 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/student/profile.tsx[22m
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747428396,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:49:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747429096,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:49:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:24:03 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/student/profile.tsx[22m
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747444138,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:49:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+[RUNTIME_ERROR]{"type":"runtime-error","timestamp":1783747445150,"name":"Error","message":"useAuth must be used within an AuthProvider","stack":"    at useAuth /home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx:66:11\n    at ProtectedRoute /home/runner/workspace/artifacts/placement-system/src/App.tsx:49:37\n\n\n\n\n\n\n\n","loc":{"line":66,"column":11,"file":"/home/runner/workspace/artifacts/placement-system/src/lib/auth.tsx"},"frame":"64 |    const context = useContext(AuthContext);\n65 |    if (context === undefined) {\n66 |      throw new Error('useAuth must be used within an AuthProvider');\n   |            ^\n67 |    }\n68 |    return context;"}
+[41m[30m ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL [39m[49m [31m@workspace/placement-system@0.0.0 dev: `vite --config vite.config.ts --host 0.0.0.0`[39m
+[31mExit status 143[39m

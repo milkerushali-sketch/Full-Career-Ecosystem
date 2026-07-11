@@ -1,0 +1,158 @@
+
+> @workspace/placement-system@0.0.0 dev /home/runner/workspace/artifacts/placement-system
+> vite --config vite.config.ts --host 0.0.0.0
+
+[replit-cartographer] Loaded @theme tokens from /home/runner/workspace/artifacts/placement-system/src/index.css
+[2m5:24:23 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because lockfile has changed
+
+  [32m[1mVITE[22m v7.3.6[39m  [2mready in [0m[1m857[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m20641[22m/[39m
+  [32m➜[39m  [1mNetwork[22m: [36mhttp://172.24.0.2:[1m20641[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:27:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lib/auth.tsx, /src/pages/auth/register.tsx, /src/pages/student/projects.tsx, /src/pages/student/academics.tsx, /src/pages/student/dashboard.tsx, /src/pages/student/profile.tsx, /src/pages/auth/login.tsx, /src/pages/student/skills.tsx, /src/pages/student/internships.tsx, /src/pages/student/certifications.tsx, /src/pages/student/coding-profiles.tsx, /src/pages/student/readiness.tsx, /src/pages/student/companies.tsx, /src/pages/officer/students.tsx, /src/pages/student/recommendations.tsx, /src/pages/student/resume.tsx, /src/pages/student/notifications.tsx, /src/pages/officer/dashboard.tsx, /src/pages/officer/analytics.tsx, /src/pages/officer/companies.tsx, /src/pages/officer/jobs.tsx, /src/pages/admin/departments.tsx, /src/pages/officer/interviews.tsx, /src/pages/admin/dashboard.tsx, /src/pages/admin/users.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:27:37 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/lib/auth.tsx, /src/pages/auth/register.tsx, /src/pages/student/projects.tsx, /src/pages/student/academics.tsx, /src/pages/student/dashboard.tsx, /src/pages/student/profile.tsx, /src/pages/auth/login.tsx, /src/pages/student/skills.tsx, /src/pages/student/internships.tsx, /src/pages/student/certifications.tsx, /src/pages/student/coding-profiles.tsx, /src/pages/student/readiness.tsx, /src/pages/student/companies.tsx, /src/pages/officer/students.tsx, /src/pages/student/recommendations.tsx, /src/pages/student/resume.tsx, /src/pages/student/notifications.tsx, /src/pages/officer/dashboard.tsx, /src/pages/officer/analytics.tsx, /src/pages/officer/companies.tsx, /src/pages/officer/jobs.tsx, /src/pages/admin/departments.tsx, /src/pages/officer/interviews.tsx, /src/pages/admin/dashboard.tsx, /src/pages/admin/users.tsx[22m [33m(x2)[39m
+[2m5:27:37 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:27:37 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.schemas.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist? [33m(x2)[39m
+[2m5:27:37 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:27:37 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /@fs/home/runner/workspace/lib/api-client-react/src/generated/api.ts (resolved id: /home/runner/workspace/lib/api-client-react/src/generated/api.ts) in /home/runner/workspace/lib/api-client-react/src/index.ts. Does the file exist? [33m(x2)[39m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:29:03 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/student/resume.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:29:32 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
