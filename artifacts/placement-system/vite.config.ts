@@ -72,6 +72,17 @@ export default defineConfig({
     fs: {
       strict: true,
     },
+    // On Replit, requests to /api are routed straight to the API server by
+    // the platform's path-based router and never hit this dev server. When
+    // running locally (e.g. in VSCode) there is no such router, so proxy
+    // /api to the API server ourselves. API_PROXY_TARGET lets you point at
+    // a non-default API port; defaults to the API server's standard port.
+    proxy: {
+      '/api': {
+        target: process.env.API_PROXY_TARGET || 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     port,
