@@ -1,0 +1,4 @@
+- [PlacePro DB rebuild pattern](placepro-db-rebuild.md) — new schema tables require `tsc -p lib/db/tsconfig.json` to regenerate dist/*.d.ts before api-server typecheck passes
+- [PlacePro security model](placepro-security.md) — public registration locked to student role; officer/admin creation is admin-only; interview PATCH requires officer/admin role
+- [PlacePro seed credentials](placepro-seed.md) — demo login credentials and seed script location
+- [PlacePro fresh-import setup](placepro-fresh-setup.md) — after a fresh import/clone, DB is empty; must run drizzle push + seed before login works
