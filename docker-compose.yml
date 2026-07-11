@@ -1,0 +1,22 @@
+# Use Node LTS (avoid Node 24 for now)
+FROM node:20-slim
+
+WORKDIR /app
+
+# Copy package files first
+COPY pnpm-lock.yaml package.json ./
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Install dependencies
+RUN pnpm install
+
+# Copy the rest of the project
+COPY . .
+
+# Expose Vite dev port
+EXPOSE 5173
+
+# Start the dev server
+CMD ["pnpm", "--filter", "@workspace/placement-system", "run", "dev"]
