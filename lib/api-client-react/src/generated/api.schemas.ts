@@ -75,6 +75,20 @@ export interface UserUpdate {
   isActive?: boolean;
 }
 
+export interface UpdateAccountBody {
+  name: string;
+  email: string;
+}
+
+export interface ChangePasswordBody {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordResponse {
+  success: boolean;
+}
+
 export interface StudentProfile {
   id: number;
   userId: number;
@@ -362,6 +376,49 @@ export interface AIAnalysis {
   strengths: string[];
   weaknesses?: string[];
   analysisDate?: string;
+}
+
+export interface ResumeContact {
+  name: string;
+  email: string;
+  /** @nullable */
+  phone?: string | null;
+  /** @nullable */
+  address?: string | null;
+  /** @nullable */
+  linkedinUrl?: string | null;
+}
+
+export interface ResumeEducation {
+  degree: string;
+  /** @nullable */
+  batch?: string | null;
+  /** @nullable */
+  cgpa?: number | null;
+  highlights: string[];
+}
+
+export interface ResumeSkillGroup {
+  category: string;
+  skills: string[];
+}
+
+export interface ResumeSection {
+  heading: string;
+  bullets: string[];
+}
+
+export interface GeneratedResume {
+  contact: ResumeContact;
+  summary: string;
+  education: ResumeEducation;
+  skillsByCategory: ResumeSkillGroup[];
+  experience: ResumeSection[];
+  projects: ResumeSection[];
+  certifications: string[];
+  codingProfiles: string[];
+  atsTips: string[];
+  formattedText: string;
 }
 
 export interface Company {

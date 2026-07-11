@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useGetMyProfile, getGetMyProfileQueryKey, useUpdateMyProfile, StudentProfile } from '@workspace/api-client-react';
+import { useGetMyProfile, getGetMyProfileQueryKey, useUpdateMyProfile, useUpdateMyAccount, useChangeMyPassword, StudentProfile } from '@workspace/api-client-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,15 +9,79 @@ import { Textarea } from '@/components/ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
-import { Save, Loader2, Link as LinkIcon, MapPin, Phone } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { Save, Loader2, Link as LinkIcon, MapPin, Phone, User as UserIcon, KeyRound } from 'lucide-react';
 
 export default function StudentProfilePage() {
   const { data: profile, isLoading } = useGetMyProfile({
     query: { queryKey: getGetMyProfileQueryKey() }
   });
   const updateProfile = useUpdateMyProfile();
+  const updateAccount = useUpdateMyAccount();
+  const changePassword = useChangeMyPassword();
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const { user, login } = useAuth();
+
+  const [accountData, setAccountData] = useState({ name: '', email: '' });
+  const accountInitializedRef = useRef(false);
+
+  useEffect(() => {
+    if (user && !accountInitializedRef.current) {
+      accountInitializedRef.current = true;
+      setAccountData({ name: user.name, email: user.email });
+    }
+  }, [user]);
+
+  const handleAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAccountData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAccountSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateAccount.mutate({ data: accountData }, {
+      onSuccess: (res) => {
+        login(res.token, res.user);
+        toast({ title: 'Success', description: 'Account details updated' });
+      },
+      onError: (err: any) => {
+        toast({
+          title: 'Error',
+          description: err.response?.data?.error || 'Failed to update account',
+          variant: 'destructive'
+        });
+      }
+    });
+  };
+
+  const [passwordData, setPasswordData] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPasswordData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast({ title: 'Error', description: 'New passwords do not match', variant: 'destructive' });
+      return;
+    }
+    changePassword.mutate({ data: { currentPassword: passwordData.currentPassword, newPassword: passwordData.newPassword } }, {
+      onSuccess: () => {
+        toast({ title: 'Success', description: 'Password changed successfully' });
+        setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      },
+      onError: (err: any) => {
+        toast({
+          title: 'Error',
+          description: err.response?.data?.error || 'Failed to change password',
+          variant: 'destructive'
+        });
+      }
+    });
+  };
 
   const [formData, setFormData] = useState({
     phone: '',
@@ -151,15 +215,10 @@ export default function StudentProfilePage() {
         <div className="lg:col-span-1 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Account Info</CardTitle>
+              <CardTitle className="text-lg">Academic Status</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <div className="text-sm font-medium text-muted-foreground mb-1">Email</div>
-                <div className="text-sm">{profile.email}</div>
-              </div>
-              <div>
-                <div className="text-sm font-medium text-muted-foreground mb-1">Academic Status</div>
                 <div className="text-sm flex items-center justify-between">
                   <span>CGPA</span>
                   <span className="font-bold text-primary">{profile.cgpa ? profile.cgpa.toFixed(2) : "N/A"}</span>
@@ -172,6 +231,64 @@ export default function StudentProfilePage() {
             </CardContent>
           </Card>
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <form onSubmit={handleAccountSubmit}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg"><UserIcon className="h-5 w-5" /> Account Details</CardTitle>
+              <CardDescription>Your login name and email address.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="acc-name">Full Name</Label>
+                <Input id="acc-name" name="name" value={accountData.name} onChange={handleAccountChange} required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="acc-email">Email</Label>
+                <Input id="acc-email" name="email" type="email" value={accountData.email} onChange={handleAccountChange} required />
+              </div>
+            </CardContent>
+            <div className="px-6 pb-6 pt-2">
+              <Button type="submit" disabled={updateAccount.isPending} data-testid="button-save-account">
+                {updateAccount.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+                Save Account
+              </Button>
+            </div>
+          </form>
+        </Card>
+
+        <Card>
+          <form onSubmit={handlePasswordSubmit}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg"><KeyRound className="h-5 w-5" /> Change Password</CardTitle>
+              <CardDescription>Update your account password.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="currentPassword">Current Password</Label>
+                <Input id="currentPassword" name="currentPassword" type="password" value={passwordData.currentPassword} onChange={handlePasswordChange} required />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="newPassword">New Password</Label>
+                  <Input id="newPassword" name="newPassword" type="password" value={passwordData.newPassword} onChange={handlePasswordChange} required minLength={6} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input id="confirmPassword" name="confirmPassword" type="password" value={passwordData.confirmPassword} onChange={handlePasswordChange} required minLength={6} />
+                </div>
+              </div>
+            </CardContent>
+            <div className="px-6 pb-6 pt-2">
+              <Button type="submit" disabled={changePassword.isPending} data-testid="button-change-password">
+                {changePassword.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <KeyRound className="mr-2 h-4 w-4" />}
+                Change Password
+              </Button>
+            </div>
+          </form>
+        </Card>
       </div>
     </div>
   );

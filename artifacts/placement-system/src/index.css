@@ -214,3 +214,20 @@
     inset: -1px;
   }
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #resume-print-area, #resume-print-area * {
+    visibility: visible;
+  }
+  #resume-print-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: none !important;
+    padding: 0 !important;
+  }
+}

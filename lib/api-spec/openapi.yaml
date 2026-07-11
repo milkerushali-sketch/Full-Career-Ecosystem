@@ -105,6 +105,44 @@ paths:
               schema:
                 $ref: "#/components/schemas/User"
 
+  /auth/account:
+    put:
+      operationId: updateMyAccount
+      tags: [auth]
+      summary: Update account name/email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAccountBody"
+      responses:
+        "200":
+          description: Updated account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+
+  /auth/password:
+    put:
+      operationId: changeMyPassword
+      tags: [auth]
+      summary: Change account password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordBody"
+      responses:
+        "200":
+          description: Password changed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangePasswordResponse"
+
   # ─── Student Profile ─────────────────────────────────────────────────────────
   /students/profile:
     get:
@@ -487,6 +525,19 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/CompanyEligibility"
+
+  /students/resume/build:
+    post:
+      operationId: buildAIResume
+      tags: [ai]
+      summary: Generate an ATS-friendly resume from the student's profile data
+      responses:
+        "200":
+          description: Generated resume
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedResume"
 
   # ─── Companies ───────────────────────────────────────────────────────────────
   /companies:
@@ -1076,6 +1127,31 @@ components:
         isActive:
           type: boolean
 
+    UpdateAccountBody:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+
+    ChangePasswordBody:
+      type: object
+      required: [currentPassword, newPassword]
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+
+    ChangePasswordResponse:
+      type: object
+      required: [success]
+      properties:
+        success:
+          type: boolean
+
     # ─── Student ──────────────────────────────────────────────────────────────
     StudentProfile:
       type: object
@@ -1493,6 +1569,95 @@ components:
           enum: [high, medium, low]
         estimatedHours:
           type: ["integer", "null"]
+
+    ResumeContact:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+        linkedinUrl:
+          type: ["string", "null"]
+
+    ResumeEducation:
+      type: object
+      required: [degree, highlights]
+      properties:
+        degree:
+          type: string
+        batch:
+          type: ["string", "null"]
+        cgpa:
+          type: ["number", "null"]
+        highlights:
+          type: array
+          items:
+            type: string
+
+    ResumeSkillGroup:
+      type: object
+      required: [category, skills]
+      properties:
+        category:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+
+    ResumeSection:
+      type: object
+      required: [heading, bullets]
+      properties:
+        heading:
+          type: string
+        bullets:
+          type: array
+          items:
+            type: string
+
+    GeneratedResume:
+      type: object
+      required: [contact, summary, education, skillsByCategory, experience, projects, certifications, codingProfiles, atsTips, formattedText]
+      properties:
+        contact:
+          $ref: "#/components/schemas/ResumeContact"
+        summary:
+          type: string
+        education:
+          $ref: "#/components/schemas/ResumeEducation"
+        skillsByCategory:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResumeSkillGroup"
+        experience:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResumeSection"
+        projects:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResumeSection"
+        certifications:
+          type: array
+          items:
+            type: string
+        codingProfiles:
+          type: array
+          items:
+            type: string
+        atsTips:
+          type: array
+          items:
+            type: string
+        formattedText:
+          type: string
 
     CompanyEligibility:
       type: object

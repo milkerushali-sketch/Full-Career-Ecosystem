@@ -13,6 +13,9 @@ export const studentProfilesTable = pgTable("student_profiles", {
   bio: text("bio"),
   linkedinUrl: text("linkedin_url"),
   resumeUrl: text("resume_url"),
+  resumeText: text("resume_text"),
+  resumeFileName: text("resume_file_name"),
+  resumeUploadedAt: timestamp("resume_uploaded_at"),
   photoUrl: text("photo_url"),
 });
 

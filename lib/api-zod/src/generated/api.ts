@@ -80,6 +80,41 @@ export const GetMeResponse = zod.object({
 
 
 /**
+ * @summary Update account name/email
+ */
+export const UpdateMyAccountBody = zod.object({
+  "name": zod.string(),
+  "email": zod.string()
+})
+
+export const UpdateMyAccountResponse = zod.object({
+  "token": zod.string(),
+  "user": zod.object({
+  "id": zod.number(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "role": zod.enum(['student', 'officer', 'admin']),
+  "isActive": zod.boolean().optional(),
+  "departmentId": zod.number().nullish(),
+  "createdAt": zod.string()
+})
+})
+
+
+/**
+ * @summary Change account password
+ */
+export const ChangeMyPasswordBody = zod.object({
+  "currentPassword": zod.string(),
+  "newPassword": zod.string()
+})
+
+export const ChangeMyPasswordResponse = zod.object({
+  "success": zod.boolean()
+})
+
+
+/**
  * @summary Get my student profile
  */
 export const GetMyProfileResponse = zod.object({
@@ -574,6 +609,43 @@ export const GetCompanyEligibilityResponseItem = zod.object({
   "missingCriteria": zod.array(zod.string()).optional()
 })
 export const GetCompanyEligibilityResponse = zod.array(GetCompanyEligibilityResponseItem)
+
+
+/**
+ * @summary Generate an ATS-friendly resume from the student's profile data
+ */
+export const BuildAIResumeResponse = zod.object({
+  "contact": zod.object({
+  "name": zod.string(),
+  "email": zod.string(),
+  "phone": zod.string().nullish(),
+  "address": zod.string().nullish(),
+  "linkedinUrl": zod.string().nullish()
+}),
+  "summary": zod.string(),
+  "education": zod.object({
+  "degree": zod.string(),
+  "batch": zod.string().nullish(),
+  "cgpa": zod.number().nullish(),
+  "highlights": zod.array(zod.string())
+}),
+  "skillsByCategory": zod.array(zod.object({
+  "category": zod.string(),
+  "skills": zod.array(zod.string())
+})),
+  "experience": zod.array(zod.object({
+  "heading": zod.string(),
+  "bullets": zod.array(zod.string())
+})),
+  "projects": zod.array(zod.object({
+  "heading": zod.string(),
+  "bullets": zod.array(zod.string())
+})),
+  "certifications": zod.array(zod.string()),
+  "codingProfiles": zod.array(zod.string()),
+  "atsTips": zod.array(zod.string()),
+  "formattedText": zod.string()
+})
 
 
 /**

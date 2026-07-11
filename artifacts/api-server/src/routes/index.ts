@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authRouter from "./auth";
 import studentsRouter from "./students";
+import resumeRouter from "./resume";
 import companiesRouter from "./companies";
 import jobsRouter from "./jobs";
 import interviewsRouter from "./interviews";
@@ -14,6 +15,7 @@ const router = Router();
 router.use(healthRouter);
 router.use(authRouter);
 router.use(studentsRouter);
+router.use(resumeRouter);
 router.use(companiesRouter);
 router.use(jobsRouter);
 router.use(interviewsRouter);

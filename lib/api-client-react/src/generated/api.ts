@@ -27,6 +27,8 @@ import type {
   AuthResponse,
   Certification,
   CertificationInput,
+  ChangePasswordBody,
+  ChangePasswordResponse,
   CodingProfiles,
   CodingProfilesUpdate,
   Company,
@@ -36,6 +38,7 @@ import type {
   Department,
   DepartmentInput,
   DepartmentUpdate,
+  GeneratedResume,
   HealthStatus,
   Internship,
   InternshipInput,
@@ -63,6 +66,7 @@ import type {
   StudentProfile,
   StudentProfileUpdate,
   StudentSummary,
+  UpdateAccountBody,
   User,
   UserUpdate
 } from './api.schemas';
@@ -389,6 +393,148 @@ export function useGetMe<TData = Awaited<ReturnType<typeof getMe>>, TError = Err
 
 
 
+
+export const getUpdateMyAccountUrl = () => {
+
+
+
+
+  return `/api/auth/account`
+}
+
+/**
+ * @summary Update account name/email
+ */
+export const updateMyAccount = async (updateAccountBody: UpdateAccountBody, options?: RequestInit): Promise<AuthResponse> => {
+
+  return customFetch<AuthResponse>(getUpdateMyAccountUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(updateAccountBody)
+  }
+);}
+
+
+
+
+
+export const getUpdateMyAccountMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMyAccount>>, TError,{data: BodyType<UpdateAccountBody>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateMyAccount>>, TError,{data: BodyType<UpdateAccountBody>}, TContext> => {
+
+const mutationKey = ['updateMyAccount'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMyAccount>>, {data: BodyType<UpdateAccountBody>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateMyAccount(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMyAccountMutationResult = NonNullable<Awaited<ReturnType<typeof updateMyAccount>>>
+    export type UpdateMyAccountMutationBody = BodyType<UpdateAccountBody>
+    export type UpdateMyAccountMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Update account name/email
+ */
+export const useUpdateMyAccount = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMyAccount>>, TError,{data: BodyType<UpdateAccountBody>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof updateMyAccount>>,
+        TError,
+        {data: BodyType<UpdateAccountBody>},
+        TContext
+      > => {
+      return useMutation(getUpdateMyAccountMutationOptions(options));
+    }
+
+export const getChangeMyPasswordUrl = () => {
+
+
+
+
+  return `/api/auth/password`
+}
+
+/**
+ * @summary Change account password
+ */
+export const changeMyPassword = async (changePasswordBody: ChangePasswordBody, options?: RequestInit): Promise<ChangePasswordResponse> => {
+
+  return customFetch<ChangePasswordResponse>(getChangeMyPasswordUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(changePasswordBody)
+  }
+);}
+
+
+
+
+
+export const getChangeMyPasswordMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changeMyPassword>>, TError,{data: BodyType<ChangePasswordBody>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof changeMyPassword>>, TError,{data: BodyType<ChangePasswordBody>}, TContext> => {
+
+const mutationKey = ['changeMyPassword'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof changeMyPassword>>, {data: BodyType<ChangePasswordBody>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  changeMyPassword(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ChangeMyPasswordMutationResult = NonNullable<Awaited<ReturnType<typeof changeMyPassword>>>
+    export type ChangeMyPasswordMutationBody = BodyType<ChangePasswordBody>
+    export type ChangeMyPasswordMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Change account password
+ */
+export const useChangeMyPassword = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changeMyPassword>>, TError,{data: BodyType<ChangePasswordBody>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof changeMyPassword>>,
+        TError,
+        {data: BodyType<ChangePasswordBody>},
+        TContext
+      > => {
+      return useMutation(getChangeMyPasswordMutationOptions(options));
+    }
 
 export const getGetMyProfileUrl = () => {
 
@@ -2155,6 +2301,77 @@ export function useGetCompanyEligibility<TData = Awaited<ReturnType<typeof getCo
 
 
 
+
+export const getBuildAIResumeUrl = () => {
+
+
+
+
+  return `/api/students/resume/build`
+}
+
+/**
+ * @summary Generate an ATS-friendly resume from the student's profile data
+ */
+export const buildAIResume = async ( options?: RequestInit): Promise<GeneratedResume> => {
+
+  return customFetch<GeneratedResume>(getBuildAIResumeUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+
+export const getBuildAIResumeMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof buildAIResume>>, TError,void, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof buildAIResume>>, TError,void, TContext> => {
+
+const mutationKey = ['buildAIResume'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof buildAIResume>>, void> = () => {
+
+
+          return  buildAIResume(requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type BuildAIResumeMutationResult = NonNullable<Awaited<ReturnType<typeof buildAIResume>>>
+
+    export type BuildAIResumeMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Generate an ATS-friendly resume from the student's profile data
+ */
+export const useBuildAIResume = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof buildAIResume>>, TError,void, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof buildAIResume>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getBuildAIResumeMutationOptions(options));
+    }
 
 export const getListCompaniesUrl = () => {
 

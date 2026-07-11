@@ -337,7 +337,7 @@ async function runAnalysis(uid: number, res: any): Promise<void> {
     certCount: certs.length,
     internCount: internships.length,
     codingProfile: coding ?? null,
-    hasResume: !!profile?.resumeUrl,
+    hasResume: !!profile?.resumeUrl || !!profile?.resumeText,
   });
 
   await db.insert(aiAnalysesTable).values({
