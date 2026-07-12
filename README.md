@@ -20,7 +20,50 @@ lib/
   api-zod/             Zod schemas generated from the OpenAPI spec
   api-client-react/    Typed React Query hooks generated from the OpenAPI spec
 ```
+## Directory Structure
 
+```text
+.
+|-- artifacts/
+|   |-- api-server/
+|   |   |-- build.mjs
+|   |   |-- package.json
+|   |   |-- dist/
+|   |   `-- src/
+|   |       |-- app.ts
+|   |       |-- index.ts
+|   |       |-- lib/
+|   |       `-- routes/
+|   |-- mockup-sandbox/
+|   |   |-- mockupPreviewPlugin.ts
+|   |   |-- package.json
+|   |   |-- src/
+|   |   `-- vite.config.ts
+|   `-- placement-system/
+|       |-- package.json
+|       |-- public/
+|       |-- src/
+|       |   |-- components/
+|       |   |-- hooks/
+|       |   |-- lib/
+|       |   `-- pages/
+|       `-- vite.config.ts
+|-- lib/
+|   |-- api-client-react/
+|   |-- api-spec/
+|   |-- api-zod/
+|   `-- db/
+|       |-- drizzle.config.ts
+|       `-- src/
+|           |-- index.ts
+|           `-- schema/
+|-- scripts/
+|   |-- post-merge.sh
+|   `-- src/
+|-- package.json
+|-- pnpm-workspace.yaml
+`-- tsconfig.json
+```
 The frontend and API are two separate services that you run in two separate
 terminals; the frontend proxies `/api/*` requests to the API server.
 
