@@ -1,8 +1,0 @@
-
-> @workspace/placement-system@0.0.0 dev /home/runner/workspace/artifacts/placement-system
-> vite --config vite.config.ts --host 0.0.0.0
-
-sh: vite: command not found
-[41m[30m ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL [39m[49m [31m@workspace/placement-system@0.0.0 dev: `vite --config vite.config.ts --host 0.0.0.0`[39m
-[31mspawn ENOENT[39m
-[43m[30m WARN [39m[49m  Local package.json exists, but node_modules missing, did you mean to install?
