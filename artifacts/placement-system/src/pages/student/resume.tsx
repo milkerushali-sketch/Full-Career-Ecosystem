@@ -24,6 +24,7 @@ interface UploadAnalysis {
   recommendations: string[];
   targetCompanyName: string | null;
   extractedWordCount: number;
+  analyzedBy?: 'Gemini' | 'Rule-based fallback';
 }
 
 export default function StudentResumePage() {
@@ -243,6 +244,9 @@ export default function StudentResumePage() {
 
           {generatedResume && (
             <div className="mt-4 space-y-4">
+              <Badge variant="secondary">
+                Generated with {generatedResume.generatedBy ?? 'your profile data'}
+              </Badge>
               <div className="flex flex-wrap gap-2">
                 <Button size="sm" variant="outline" onClick={handleDownloadText} data-testid="button-download-txt">
                   <Download className="mr-2 h-4 w-4" /> Download .txt
@@ -324,6 +328,7 @@ export default function StudentResumePage() {
               {uploadAnalysis.targetCompanyName && (
                 <p className="text-sm text-muted-foreground">Scored against <span className="font-medium text-foreground">{uploadAnalysis.targetCompanyName}</span>'s required skills.</p>
               )}
+              <p className="text-xs text-muted-foreground">Analysis provider: {uploadAnalysis.analyzedBy ?? 'profile matching engine'}</p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

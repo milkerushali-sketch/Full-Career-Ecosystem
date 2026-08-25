@@ -14,9 +14,9 @@ import {
 } from "@workspace/db";
 import { eq } from "drizzle-orm";
 import { requireAuth, requireRole } from "../lib/auth";
-import { buildResume } from "../lib/resumeBuilder";
 import { extractTextFromPdf } from "../lib/pdfText";
 import { analyzeResumeUpload } from "../lib/resumeMatch";
+import { analyzeResumeWithGemini, buildResumeWithGemini } from "../lib/resumeAi";
 
 const router = Router();
 const upload = multer({
@@ -48,7 +48,7 @@ router.post("/students/resume/build", requireAuth, requireRole("student"), async
   const { user, profile, skills, projects, internships, certifications, semesters, coding } = await loadFullProfile(uid);
   if (!user) { res.status(404).json({ error: "User not found" }); return; }
 
-  const resume = buildResume({
+  const resume = await buildResumeWithGemini({
     name: user.name,
     email: user.email,
     phone: profile?.phone,
@@ -103,12 +103,18 @@ router.post("/students/resume/upload", requireAuth, requireRole("student"), uplo
     }
   }
 
-  const analysis = analyzeResumeUpload({
+  const fallbackAnalysis = analyzeResumeUpload({
     resumeText,
     studentSkills: skills.map(s => s.name),
     targetCompanyName,
     targetRequiredSkills,
   });
+  const analysis = await analyzeResumeWithGemini({
+    resumeText,
+    studentSkills: skills.map(s => s.name),
+    targetCompanyName,
+    targetRequiredSkills,
+  }, fallbackAnalysis);
 
   // Persist extracted text so future AI analyses know a resume is on file.
   if (existing) {

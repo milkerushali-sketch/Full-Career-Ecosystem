@@ -1,7 +1,7 @@
 // Deterministic ATS-friendly resume builder.
 // Generates a structured, ATS-safe resume (single column, plain text, no tables/graphics)
-// straight from the student's stored profile data. Kept rule-based (no external LLM call)
-// so the feature works without any paid AI provider.
+// straight from the student's stored profile data. This deterministic draft is
+// also the safe fallback when an optional Gemini request is unavailable.
 
 export interface ResumeSkill { name: string; level: string; category: string; }
 export interface ResumeProject { title: string; description?: string | null; techStack?: string[] | null; githubUrl?: string | null; liveUrl?: string | null; startDate?: string | null; endDate?: string | null; }
@@ -47,6 +47,7 @@ export interface GeneratedResume {
   codingProfiles: string[];
   atsTips: string[];
   formattedText: string;
+  generatedBy?: "Gemini" | "Rule-based fallback";
 }
 
 const ACTION_VERBS = ["Built", "Developed", "Designed", "Implemented", "Engineered", "Led", "Optimized"];

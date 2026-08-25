@@ -539,6 +539,32 @@ paths:
               schema:
                 $ref: "#/components/schemas/GeneratedResume"
 
+  /students/resume/upload:
+    post:
+      operationId: analyzeUploadedResume
+      tags: [ai]
+      summary: Analyze an uploaded PDF resume against ATS requirements
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                companyId:
+                  type: integer
+      responses:
+        "200":
+          description: ATS analysis of the uploaded resume
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResumeUploadAnalysis"
+
   # ─── Companies ───────────────────────────────────────────────────────────────
   /companies:
     get:
@@ -1658,6 +1684,45 @@ components:
             type: string
         formattedText:
           type: string
+        generatedBy:
+          type: string
+          enum: [Gemini, Rule-based fallback]
+
+    ResumeUploadAnalysis:
+      type: object
+      required: [fileName, atsScore, formattingScore, keywordScore, matchedKeywords, missingKeywords, formattingIssues, recommendations, extractedWordCount]
+      properties:
+        fileName:
+          type: string
+        atsScore:
+          type: integer
+        formattingScore:
+          type: integer
+        keywordScore:
+          type: integer
+        matchedKeywords:
+          type: array
+          items:
+            type: string
+        missingKeywords:
+          type: array
+          items:
+            type: string
+        formattingIssues:
+          type: array
+          items:
+            type: string
+        recommendations:
+          type: array
+          items:
+            type: string
+        targetCompanyName:
+          type: ["string", "null"]
+        extractedWordCount:
+          type: integer
+        analyzedBy:
+          type: string
+          enum: [Gemini, Rule-based fallback]
 
     CompanyEligibility:
       type: object

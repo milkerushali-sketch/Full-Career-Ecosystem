@@ -28,6 +28,7 @@ export interface ResumeUploadAnalysis {
   recommendations: string[];
   targetCompanyName: string | null;
   extractedWordCount: number;
+  analyzedBy?: "Gemini" | "Rule-based fallback";
 }
 
 function checkFormatting(text: string): { score: number; issues: string[] } {
