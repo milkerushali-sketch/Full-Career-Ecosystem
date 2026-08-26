@@ -25,7 +25,7 @@ services:
     routes:
       - type: rewrite
         source: /api/*
-        destination: https://full-career-ecosystem-3.onrender.com/api/*
+        destination: https://full-career-ecosystem.onrender.com/api/*
       - type: rewrite
         source: /*
         destination: /index.html
