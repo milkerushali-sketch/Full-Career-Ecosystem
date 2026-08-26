@@ -54,6 +54,7 @@ Thumbs.db
 .cache/
 .local/
 .replit
+.replitignore
 replit.nix
 replit.md
 .replit-artifact/
