@@ -245,7 +245,7 @@ export default function StudentResumePage() {
           {generatedResume && (
             <div className="mt-4 space-y-4">
               <Badge variant="secondary">
-                Generated with {generatedResume.generatedBy ?? 'your profile data'}
+                Generated from your profile data
               </Badge>
               <div className="flex flex-wrap gap-2">
                 <Button size="sm" variant="outline" onClick={handleDownloadText} data-testid="button-download-txt">

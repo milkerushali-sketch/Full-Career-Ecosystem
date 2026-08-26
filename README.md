@@ -90,13 +90,29 @@ npx tsx artifacts/api-server/src/lib/seed.ts
 The seed script is safe to re-run — it uses `onConflictDoNothing()`. It
 creates demo accounts:
 
-| Role    | Email                  | Password    |
-|---------|------------------------|-------------|
-| Student | student@placepro.edu   | student@123 |
-| Officer | officer@placepro.edu   | officer@123 |
-| Admin   | admin@placepro.edu     | admin@123   |
+| Role    | Email                | Password    |
+| ------- | -------------------- | ----------- |
+| Student | student@placepro.edu | student@123 |
+| Officer | officer@placepro.edu | officer@123 |
+| Admin   | admin@placepro.edu   | admin@123   |
 
 ## 4. Run the app
+
+Once `artifacts/api-server/.env` contains a valid `DATABASE_URL` and
+`SESSION_SECRET`, start both services with one command from the repository
+root:
+
+```powershell
+pnpm run dev
+```
+
+The command starts the API on `http://localhost:8080` and the frontend on
+`http://localhost:5173`. Press `Ctrl+C` once to stop both services.
+
+If the environment file is not configured yet, the command prints the missing
+variable and exits without starting an incomplete app.
+
+### Manual two-terminal startup
 
 Open **two terminals** in VSCode (`` Ctrl/Cmd+Shift+` ``, then split):
 
