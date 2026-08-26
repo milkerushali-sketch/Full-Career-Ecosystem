@@ -2,7 +2,7 @@ services:
   - type: web
     name: placepro-api
     runtime: node
-    buildCommand: pnpm run build:api:deploy
+    buildCommand: pnpm -w run build:api:deploy
     startCommand: pnpm --filter @workspace/api-server run start
     envVars:
       - key: NODE_VERSION
