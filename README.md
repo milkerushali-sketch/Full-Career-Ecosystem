@@ -174,3 +174,29 @@ pnpm --filter @workspace/api-spec run codegen               # regenerate API hoo
 - API: Express 5, PostgreSQL + Drizzle ORM, Zod validation
 - Frontend: React + Vite, Radix UI, TanStack Query
 - API client/schemas generated via Orval from an OpenAPI spec (`lib/api-spec`)
+
+## Deploying On Render
+
+The repository includes `render.yaml` for a two-service Render deployment:
+`placepro-api` runs the Express API and `placepro-frontend` serves the built
+Vite application. In Render, use **Blueprints** and select this repository.
+
+Set `DATABASE_URL` and `SESSION_SECRET` as secret environment variables for
+the API service. Do not use `pnpm install --filter @workspace/api-server` as
+the build command: it omits dependencies from the shared `lib/*` workspaces.
+The API build must install from the repository root with:
+
+```bash
+pnpm run build:api:deploy
+```
+
+After the API database is provisioned, run the schema push once with the
+production `DATABASE_URL`, then seed only if demo data is wanted:
+
+```bash
+pnpm --filter @workspace/db run push
+pnpm --filter @workspace/api-server exec tsx src/lib/seed.ts
+```
+
+Replace `placepro-api.onrender.com` in `render.yaml` with the actual Render
+API service hostname if Render assigns a different name or region URL.

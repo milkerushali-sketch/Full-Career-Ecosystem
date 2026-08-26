@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: placepro-api
+    runtime: node
+    buildCommand: pnpm run build:api:deploy
+    startCommand: pnpm --filter @workspace/api-server run start
+    envVars:
+      - key: NODE_VERSION
+        value: 24.14.1
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+
+  - type: web
+    name: placepro-frontend
+    runtime: static
+    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @workspace/placement-system run build
+    staticPublishPath: artifacts/placement-system/dist/public
+    envVars:
+      - key: PORT
+        value: 5173
+      - key: BASE_PATH
+        value: /
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://placepro-api.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
