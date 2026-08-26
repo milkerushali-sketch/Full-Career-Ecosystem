@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User } from '@workspace/api-client-react';
-import { setAuthTokenGetter } from '@workspace/api-client-react';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { User } from "@workspace/api-client-react";
+import { setAuthTokenGetter } from "@workspace/api-client-react";
 
 interface AuthContextType {
   user: User | null;
@@ -12,41 +12,62 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('placement_token');
-    const storedUser = localStorage.getItem('placement_user');
+    const storedToken = localStorage.getItem("placement_token");
+    const storedUser = localStorage.getItem("placement_user");
 
-    if (storedToken && storedUser) {
+    setAuthTokenGetter(() => localStorage.getItem("placement_token"));
+
+    const restoreSession = async () => {
+      if (!storedToken || !storedUser) {
+        setIsReady(true);
+        return;
+      }
+
       try {
-        const parsedUser = JSON.parse(storedUser);
+        const parsedUser = JSON.parse(storedUser) as User;
         setToken(storedToken);
         setUser(parsedUser);
+
+        const response = await fetch("/api/auth/me", {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        });
+        if (response.ok) {
+          const freshUser = (await response.json()) as User;
+          localStorage.setItem("placement_user", JSON.stringify(freshUser));
+          setUser(freshUser);
+        }
       } catch (e) {
-        console.error('Failed to parse stored user', e);
-        localStorage.removeItem('placement_token');
-        localStorage.removeItem('placement_user');
+        console.error("Failed to restore user session", e);
+        if (!storedUser) {
+          localStorage.removeItem("placement_token");
+          localStorage.removeItem("placement_user");
+        }
+      } finally {
+        setIsReady(true);
       }
-    }
-    
-    setAuthTokenGetter(() => localStorage.getItem('placement_token'));
-    setIsReady(true);
+    };
+
+    void restoreSession();
   }, []);
 
   const login = (newToken: string, newUser: User) => {
-    localStorage.setItem('placement_token', newToken);
-    localStorage.setItem('placement_user', JSON.stringify(newUser));
+    localStorage.setItem("placement_token", newToken);
+    localStorage.setItem("placement_user", JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
   };
 
   const logout = () => {
-    localStorage.removeItem('placement_token');
-    localStorage.removeItem('placement_user');
+    localStorage.removeItem("placement_token");
+    localStorage.removeItem("placement_user");
     setToken(null);
     setUser(null);
   };
@@ -54,7 +75,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   if (!isReady) return null; // Or a full screen loader
 
   return (
-    <AuthContext.Provider value={{ user, token, isAuthenticated: !!token, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, token, isAuthenticated: !!token, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -63,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

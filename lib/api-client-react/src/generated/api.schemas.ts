@@ -14,13 +14,13 @@ export interface LoginCredentials {
   password: string;
 }
 
-export type RegisterInputRole = typeof RegisterInputRole[keyof typeof RegisterInputRole];
-
+export type RegisterInputRole =
+  (typeof RegisterInputRole)[keyof typeof RegisterInputRole];
 
 export const RegisterInputRole = {
-  student: 'student',
-  officer: 'officer',
-  admin: 'admin',
+  student: "student",
+  officer: "officer",
+  admin: "admin",
 } as const;
 
 export interface RegisterInput {
@@ -36,13 +36,12 @@ export interface RegisterInput {
   batch?: string | null;
 }
 
-export type UserRole = typeof UserRole[keyof typeof UserRole];
-
+export type UserRole = (typeof UserRole)[keyof typeof UserRole];
 
 export const UserRole = {
-  student: 'student',
-  officer: 'officer',
-  admin: 'admin',
+  student: "student",
+  officer: "officer",
+  admin: "admin",
 } as const;
 
 export interface User {
@@ -61,13 +60,13 @@ export interface AuthResponse {
   user: User;
 }
 
-export type UserUpdateRole = typeof UserUpdateRole[keyof typeof UserUpdateRole];
-
+export type UserUpdateRole =
+  (typeof UserUpdateRole)[keyof typeof UserUpdateRole];
 
 export const UserUpdateRole = {
-  student: 'student',
-  officer: 'officer',
-  admin: 'admin',
+  student: "student",
+  officer: "officer",
+  admin: "admin",
 } as const;
 
 export interface UserUpdate {
@@ -115,9 +114,13 @@ export interface StudentProfile {
   resumeUrl?: string | null;
   /** @nullable */
   photoUrl?: string | null;
+  departmentId?: number | null;
 }
 
 export interface StudentProfileUpdate {
+  rollNo?: string;
+  batch?: string;
+  departmentId?: number | null;
   phone?: string;
   address?: string;
   bio?: string;
@@ -164,13 +167,12 @@ export interface StudentDashboard {
   eligibleCompanyCount: number;
 }
 
-export type SkillLevel = typeof SkillLevel[keyof typeof SkillLevel];
-
+export type SkillLevel = (typeof SkillLevel)[keyof typeof SkillLevel];
 
 export const SkillLevel = {
-  beginner: 'beginner',
-  intermediate: 'intermediate',
-  advanced: 'advanced',
+  beginner: "beginner",
+  intermediate: "intermediate",
+  advanced: "advanced",
 } as const;
 
 export interface Skill {
@@ -180,13 +182,13 @@ export interface Skill {
   category: string;
 }
 
-export type SkillInputLevel = typeof SkillInputLevel[keyof typeof SkillInputLevel];
-
+export type SkillInputLevel =
+  (typeof SkillInputLevel)[keyof typeof SkillInputLevel];
 
 export const SkillInputLevel = {
-  beginner: 'beginner',
-  intermediate: 'intermediate',
-  advanced: 'advanced',
+  beginner: "beginner",
+  intermediate: "intermediate",
+  advanced: "advanced",
 } as const;
 
 export interface SkillInput {
@@ -322,13 +324,13 @@ export interface CodingProfilesUpdate {
   codeforcesRating?: number;
 }
 
-export type SkillGapItemPriority = typeof SkillGapItemPriority[keyof typeof SkillGapItemPriority];
-
+export type SkillGapItemPriority =
+  (typeof SkillGapItemPriority)[keyof typeof SkillGapItemPriority];
 
 export const SkillGapItemPriority = {
-  high: 'high',
-  medium: 'medium',
-  low: 'low',
+  high: "high",
+  medium: "medium",
+  low: "low",
 } as const;
 
 export interface SkillGapItem {
@@ -339,23 +341,23 @@ export interface SkillGapItem {
   count?: number | null;
 }
 
-export type RecommendationType = typeof RecommendationType[keyof typeof RecommendationType];
-
+export type RecommendationType =
+  (typeof RecommendationType)[keyof typeof RecommendationType];
 
 export const RecommendationType = {
-  course: 'course',
-  certification: 'certification',
-  project: 'project',
-  practice: 'practice',
+  course: "course",
+  certification: "certification",
+  project: "project",
+  practice: "practice",
 } as const;
 
-export type RecommendationPriority = typeof RecommendationPriority[keyof typeof RecommendationPriority];
-
+export type RecommendationPriority =
+  (typeof RecommendationPriority)[keyof typeof RecommendationPriority];
 
 export const RecommendationPriority = {
-  high: 'high',
-  medium: 'medium',
-  low: 'low',
+  high: "high",
+  medium: "medium",
+  low: "low",
 } as const;
 
 export interface Recommendation {
@@ -478,13 +480,13 @@ export interface CompanyUpdate {
   eligibleDepartments?: string[];
 }
 
-export type JobPostingStatus = typeof JobPostingStatus[keyof typeof JobPostingStatus];
-
+export type JobPostingStatus =
+  (typeof JobPostingStatus)[keyof typeof JobPostingStatus];
 
 export const JobPostingStatus = {
-  open: 'open',
-  closed: 'closed',
-  upcoming: 'upcoming',
+  open: "open",
+  closed: "closed",
+  upcoming: "upcoming",
 } as const;
 
 export interface JobPosting {
@@ -507,13 +509,13 @@ export interface JobPosting {
   createdAt?: string;
 }
 
-export type JobPostingInputStatus = typeof JobPostingInputStatus[keyof typeof JobPostingInputStatus];
-
+export type JobPostingInputStatus =
+  (typeof JobPostingInputStatus)[keyof typeof JobPostingInputStatus];
 
 export const JobPostingInputStatus = {
-  open: 'open',
-  closed: 'closed',
-  upcoming: 'upcoming',
+  open: "open",
+  closed: "closed",
+  upcoming: "upcoming",
 } as const;
 
 export interface JobPostingInput {
@@ -527,13 +529,13 @@ export interface JobPostingInput {
   openings?: number;
 }
 
-export type JobPostingUpdateStatus = typeof JobPostingUpdateStatus[keyof typeof JobPostingUpdateStatus];
-
+export type JobPostingUpdateStatus =
+  (typeof JobPostingUpdateStatus)[keyof typeof JobPostingUpdateStatus];
 
 export const JobPostingUpdateStatus = {
-  open: 'open',
-  closed: 'closed',
-  upcoming: 'upcoming',
+  open: "open",
+  closed: "closed",
+  upcoming: "upcoming",
 } as const;
 
 export interface JobPostingUpdate {
@@ -546,15 +548,15 @@ export interface JobPostingUpdate {
   openings?: number;
 }
 
-export type JobApplicationStatus = typeof JobApplicationStatus[keyof typeof JobApplicationStatus];
-
+export type JobApplicationStatus =
+  (typeof JobApplicationStatus)[keyof typeof JobApplicationStatus];
 
 export const JobApplicationStatus = {
-  applied: 'applied',
-  shortlisted: 'shortlisted',
-  interviewed: 'interviewed',
-  offered: 'offered',
-  rejected: 'rejected',
+  applied: "applied",
+  shortlisted: "shortlisted",
+  interviewed: "interviewed",
+  offered: "offered",
+  rejected: "rejected",
 } as const;
 
 export interface JobApplication {
@@ -565,25 +567,24 @@ export interface JobApplication {
   appliedAt: string;
 }
 
-export type InterviewType = typeof InterviewType[keyof typeof InterviewType];
-
+export type InterviewType = (typeof InterviewType)[keyof typeof InterviewType];
 
 export const InterviewType = {
-  technical: 'technical',
-  hr: 'hr',
-  group_discussion: 'group_discussion',
-  aptitude: 'aptitude',
-  final: 'final',
+  technical: "technical",
+  hr: "hr",
+  group_discussion: "group_discussion",
+  aptitude: "aptitude",
+  final: "final",
 } as const;
 
-export type InterviewStatus = typeof InterviewStatus[keyof typeof InterviewStatus];
-
+export type InterviewStatus =
+  (typeof InterviewStatus)[keyof typeof InterviewStatus];
 
 export const InterviewStatus = {
-  scheduled: 'scheduled',
-  completed: 'completed',
-  cancelled: 'cancelled',
-  rescheduled: 'rescheduled',
+  scheduled: "scheduled",
+  completed: "completed",
+  cancelled: "cancelled",
+  rescheduled: "rescheduled",
 } as const;
 
 export interface Interview {
@@ -605,15 +606,15 @@ export interface Interview {
   result?: string | null;
 }
 
-export type InterviewInputType = typeof InterviewInputType[keyof typeof InterviewInputType];
-
+export type InterviewInputType =
+  (typeof InterviewInputType)[keyof typeof InterviewInputType];
 
 export const InterviewInputType = {
-  technical: 'technical',
-  hr: 'hr',
-  group_discussion: 'group_discussion',
-  aptitude: 'aptitude',
-  final: 'final',
+  technical: "technical",
+  hr: "hr",
+  group_discussion: "group_discussion",
+  aptitude: "aptitude",
+  final: "final",
 } as const;
 
 export interface InterviewInput {
@@ -625,14 +626,14 @@ export interface InterviewInput {
   venue?: string;
 }
 
-export type InterviewUpdateStatus = typeof InterviewUpdateStatus[keyof typeof InterviewUpdateStatus];
-
+export type InterviewUpdateStatus =
+  (typeof InterviewUpdateStatus)[keyof typeof InterviewUpdateStatus];
 
 export const InterviewUpdateStatus = {
-  scheduled: 'scheduled',
-  completed: 'completed',
-  cancelled: 'cancelled',
-  rescheduled: 'rescheduled',
+  scheduled: "scheduled",
+  completed: "completed",
+  cancelled: "cancelled",
+  rescheduled: "rescheduled",
 } as const;
 
 export interface InterviewUpdate {
@@ -643,15 +644,15 @@ export interface InterviewUpdate {
   result?: string;
 }
 
-export type NotificationType = typeof NotificationType[keyof typeof NotificationType];
-
+export type NotificationType =
+  (typeof NotificationType)[keyof typeof NotificationType];
 
 export const NotificationType = {
-  interview: 'interview',
-  job: 'job',
-  placement: 'placement',
-  system: 'system',
-  reminder: 'reminder',
+  interview: "interview",
+  job: "job",
+  placement: "placement",
+  system: "system",
+  reminder: "reminder",
 } as const;
 
 export interface Notification {
@@ -762,4 +763,3 @@ export interface AdminDashboard {
   systemHealth: string;
   recentActivity?: string[];
 }
-

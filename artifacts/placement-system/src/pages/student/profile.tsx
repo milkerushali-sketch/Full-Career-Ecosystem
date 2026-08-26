@@ -1,20 +1,41 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useGetMyProfile, getGetMyProfileQueryKey, useUpdateMyProfile, useUpdateMyAccount, useChangeMyPassword, StudentProfile } from '@workspace/api-client-react';
-import { useQueryClient } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/lib/auth';
-import { Save, Loader2, Link as LinkIcon, MapPin, Phone, User as UserIcon, KeyRound } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  useGetMyProfile,
+  getGetMyProfileQueryKey,
+  useUpdateMyProfile,
+  useUpdateMyAccount,
+  useChangeMyPassword,
+  StudentProfile,
+} from "@workspace/api-client-react";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/lib/auth";
+import {
+  Save,
+  Loader2,
+  Link as LinkIcon,
+  MapPin,
+  Phone,
+  User as UserIcon,
+  KeyRound,
+} from "lucide-react";
 
 export default function StudentProfilePage() {
   const { data: profile, isLoading } = useGetMyProfile({
-    query: { queryKey: getGetMyProfileQueryKey() }
+    query: { queryKey: getGetMyProfileQueryKey() },
   });
   const updateProfile = useUpdateMyProfile();
   const updateAccount = useUpdateMyAccount();
@@ -23,7 +44,10 @@ export default function StudentProfilePage() {
   const { toast } = useToast();
   const { user, login } = useAuth();
 
-  const [accountData, setAccountData] = useState({ name: '', email: '' });
+  const [accountData, setAccountData] = useState({ name: "", email: "" });
+  const [departments, setDepartments] = useState<
+    Array<{ id: number; name: string }>
+  >([]);
   const accountInitializedRef = useRef(false);
 
   useEffect(() => {
@@ -33,62 +57,103 @@ export default function StudentProfilePage() {
     }
   }, [user]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("placement_token");
+    if (!token) return;
+    fetch("/api/students/departments", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => (response.ok ? response.json() : []))
+      .then(setDepartments)
+      .catch(() => setDepartments([]));
+  }, []);
+
   const handleAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setAccountData(prev => ({ ...prev, [name]: value }));
+    setAccountData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleAccountSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    updateAccount.mutate({ data: accountData }, {
-      onSuccess: (res) => {
-        login(res.token, res.user);
-        toast({ title: 'Success', description: 'Account details updated' });
+    updateAccount.mutate(
+      { data: accountData },
+      {
+        onSuccess: (res) => {
+          login(res.token, res.user);
+          toast({ title: "Success", description: "Account details updated" });
+        },
+        onError: (err: any) => {
+          toast({
+            title: "Error",
+            description:
+              err.response?.data?.error || "Failed to update account",
+            variant: "destructive",
+          });
+        },
       },
-      onError: (err: any) => {
-        toast({
-          title: 'Error',
-          description: err.response?.data?.error || 'Failed to update account',
-          variant: 'destructive'
-        });
-      }
-    });
+    );
   };
 
-  const [passwordData, setPasswordData] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setPasswordData(prev => ({ ...prev, [name]: value }));
+    setPasswordData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      toast({ title: 'Error', description: 'New passwords do not match', variant: 'destructive' });
+      toast({
+        title: "Error",
+        description: "New passwords do not match",
+        variant: "destructive",
+      });
       return;
     }
-    changePassword.mutate({ data: { currentPassword: passwordData.currentPassword, newPassword: passwordData.newPassword } }, {
-      onSuccess: () => {
-        toast({ title: 'Success', description: 'Password changed successfully' });
-        setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    changePassword.mutate(
+      {
+        data: {
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword,
+        },
       },
-      onError: (err: any) => {
-        toast({
-          title: 'Error',
-          description: err.response?.data?.error || 'Failed to change password',
-          variant: 'destructive'
-        });
-      }
-    });
+      {
+        onSuccess: () => {
+          toast({
+            title: "Success",
+            description: "Password changed successfully",
+          });
+          setPasswordData({
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          });
+        },
+        onError: (err: any) => {
+          toast({
+            title: "Error",
+            description:
+              err.response?.data?.error || "Failed to change password",
+            variant: "destructive",
+          });
+        },
+      },
+    );
   };
 
   const [formData, setFormData] = useState({
-    phone: '',
-    address: '',
-    bio: '',
-    linkedinUrl: '',
-    photoUrl: ''
+    rollNo: "",
+    batch: "",
+    departmentId: null as number | null,
+    phone: "",
+    address: "",
+    bio: "",
+    linkedinUrl: "",
   });
 
   const initializedRef = useRef<number | null>(null);
@@ -97,44 +162,67 @@ export default function StudentProfilePage() {
     if (profile && initializedRef.current !== profile.id) {
       initializedRef.current = profile.id;
       setFormData({
-        phone: profile.phone || '',
-        address: profile.address || '',
-        bio: profile.bio || '',
-        linkedinUrl: profile.linkedinUrl || '',
-        photoUrl: profile.photoUrl || ''
+        rollNo: profile.rollNo || "",
+        batch: profile.batch || "",
+        departmentId: profile.departmentId ?? null,
+        phone: profile.phone || "",
+        address: profile.address || "",
+        bio: profile.bio || "",
+        linkedinUrl: profile.linkedinUrl || "",
       });
     }
   }, [profile]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    updateProfile.mutate({ data: formData }, {
-      onSuccess: (updatedProfile) => {
-        toast({ title: 'Success', description: 'Profile updated successfully' });
-        queryClient.setQueryData(getGetMyProfileQueryKey(), updatedProfile);
+    updateProfile.mutate(
+      { data: formData },
+      {
+        onSuccess: (updatedProfile) => {
+          toast({
+            title: "Success",
+            description: "Profile updated successfully",
+          });
+          queryClient.setQueryData(getGetMyProfileQueryKey(), updatedProfile);
+        },
+        onError: (err: any) => {
+          toast({
+            title: "Error",
+            description:
+              err.response?.data?.message || "Failed to update profile",
+            variant: "destructive",
+          });
+        },
       },
-      onError: (err: any) => {
-        toast({ 
-          title: 'Error', 
-          description: err.response?.data?.message || 'Failed to update profile',
-          variant: 'destructive'
-        });
-      }
-    });
+    );
   };
 
   if (isLoading) {
-    return <div className="space-y-6"><Skeleton className="h-48 w-full" /><Skeleton className="h-96 w-full" /></div>;
+    return (
+      <div className="space-y-6">
+        <Skeleton className="h-48 w-full" />
+        <Skeleton className="h-96 w-full" />
+      </div>
+    );
   }
 
   if (!profile) return null;
 
-  const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  const getInitials = (name: string) =>
+    name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .substring(0, 2)
+      .toUpperCase();
+  const generatedAvatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.name)}&background=0f766e&color=ffffff&size=256&bold=true`;
 
   return (
     <div className="space-y-6">
@@ -143,15 +231,23 @@ export default function StudentProfilePage() {
         <CardContent className="p-6 relative pt-0">
           <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-end -mt-12 sm:-mt-16 mb-4">
             <Avatar className="h-24 w-24 sm:h-32 sm:w-32 border-4 border-card shadow-lg bg-muted">
-              <AvatarImage src={formData.photoUrl || undefined} />
-              <AvatarFallback className="text-3xl bg-primary/10 text-primary">{getInitials(profile.name)}</AvatarFallback>
+              <AvatarImage src={generatedAvatarUrl} />
+              <AvatarFallback className="text-3xl bg-primary/10 text-primary">
+                {getInitials(profile.name)}
+              </AvatarFallback>
             </Avatar>
             <div className="flex-1 pb-2">
               <h2 className="text-2xl sm:text-3xl font-bold">{profile.name}</h2>
               <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-sm text-muted-foreground font-medium">
-                <span className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">{profile.rollNo || 'No Roll No'}</span>
-                <span className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">{profile.department || 'No Department'}</span>
-                <span className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">Batch: {profile.batch || 'N/A'}</span>
+                <span className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">
+                  {profile.rollNo || "No Roll No"}
+                </span>
+                <span className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">
+                  {profile.department || "No Department"}
+                </span>
+                <span className="flex items-center gap-1 bg-muted px-2 py-1 rounded-md">
+                  Batch: {profile.batch || "N/A"}
+                </span>
               </div>
             </div>
           </div>
@@ -164,22 +260,82 @@ export default function StudentProfilePage() {
             <form onSubmit={handleSubmit}>
               <CardHeader>
                 <CardTitle>Edit Profile Information</CardTitle>
-                <CardDescription>Update your contact details and bio for companies to see.</CardDescription>
+                <CardDescription>
+                  Update your contact details and bio for companies to see.
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
+                    <Label htmlFor="rollNo">Roll Number</Label>
+                    <Input
+                      id="rollNo"
+                      name="rollNo"
+                      value={formData.rollNo}
+                      onChange={handleChange}
+                      placeholder="BT240102CS"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="batch">Batch</Label>
+                    <Input
+                      id="batch"
+                      name="batch"
+                      value={formData.batch}
+                      onChange={handleChange}
+                      placeholder="2024-28"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="departmentId">Department</Label>
+                    <select
+                      id="departmentId"
+                      name="departmentId"
+                      value={formData.departmentId ?? ""}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          departmentId: e.target.value
+                            ? Number(e.target.value)
+                            : null,
+                        }))
+                      }
+                      className="border-input bg-background flex h-10 w-full rounded-md border px-3 py-2 text-sm"
+                    >
+                      <option value="">No Department</option>
+                      {departments.map((department) => (
+                        <option key={department.id} value={department.id}>
+                          {department.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number</Label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input id="phone" name="phone" value={formData.phone} onChange={handleChange} className="pl-9" placeholder="+1 (555) 000-0000" />
+                      <Input
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="pl-9"
+                        placeholder="+1 (555) 000-0000"
+                      />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="linkedinUrl">LinkedIn URL</Label>
                     <div className="relative">
                       <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input id="linkedinUrl" name="linkedinUrl" value={formData.linkedinUrl} onChange={handleChange} className="pl-9" placeholder="https://linkedin.com/in/username" />
+                      <Input
+                        id="linkedinUrl"
+                        name="linkedinUrl"
+                        value={formData.linkedinUrl}
+                        onChange={handleChange}
+                        className="pl-9"
+                        placeholder="https://linkedin.com/in/username"
+                      />
                     </div>
                   </div>
                 </div>
@@ -188,23 +344,37 @@ export default function StudentProfilePage() {
                   <Label htmlFor="address">Address</Label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Textarea id="address" name="address" value={formData.address} onChange={handleChange} className="pl-9 resize-none" placeholder="Your full address..." rows={2} />
+                    <Textarea
+                      id="address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      className="pl-9 resize-none"
+                      placeholder="Your full address..."
+                      rows={2}
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="bio">Professional Bio</Label>
-                  <Textarea id="bio" name="bio" value={formData.bio} onChange={handleChange} className="min-h-[120px]" placeholder="Write a short professional bio..." />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="photoUrl">Avatar URL</Label>
-                  <Input id="photoUrl" name="photoUrl" value={formData.photoUrl} onChange={handleChange} placeholder="https://example.com/avatar.jpg" />
+                  <Textarea
+                    id="bio"
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    className="min-h-[120px]"
+                    placeholder="Write a short professional bio..."
+                  />
                 </div>
               </CardContent>
               <div className="px-6 pb-6 pt-2">
                 <Button type="submit" disabled={updateProfile.isPending}>
-                  {updateProfile.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+                  {updateProfile.isPending ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Save className="mr-2 h-4 w-4" />
+                  )}
                   Save Changes
                 </Button>
               </div>
@@ -221,11 +391,17 @@ export default function StudentProfilePage() {
               <div>
                 <div className="text-sm flex items-center justify-between">
                   <span>CGPA</span>
-                  <span className="font-bold text-primary">{profile.cgpa ? profile.cgpa.toFixed(2) : "N/A"}</span>
+                  <span className="font-bold text-primary">
+                    {profile.cgpa ? profile.cgpa.toFixed(2) : "N/A"}
+                  </span>
                 </div>
                 <div className="text-sm flex items-center justify-between mt-1">
                   <span>Active Backlogs</span>
-                  <span className={`font-bold ${profile.backlogs && profile.backlogs > 0 ? "text-destructive" : "text-emerald-500"}`}>{profile.backlogs || 0}</span>
+                  <span
+                    className={`font-bold ${profile.backlogs && profile.backlogs > 0 ? "text-destructive" : "text-emerald-500"}`}
+                  >
+                    {profile.backlogs || 0}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -237,22 +413,47 @@ export default function StudentProfilePage() {
         <Card>
           <form onSubmit={handleAccountSubmit}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg"><UserIcon className="h-5 w-5" /> Account Details</CardTitle>
-              <CardDescription>Your login name and email address.</CardDescription>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <UserIcon className="h-5 w-5" /> Account Details
+              </CardTitle>
+              <CardDescription>
+                Your login name and email address.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="acc-name">Full Name</Label>
-                <Input id="acc-name" name="name" value={accountData.name} onChange={handleAccountChange} required />
+                <Input
+                  id="acc-name"
+                  name="name"
+                  value={accountData.name}
+                  onChange={handleAccountChange}
+                  required
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="acc-email">Email</Label>
-                <Input id="acc-email" name="email" type="email" value={accountData.email} onChange={handleAccountChange} required />
+                <Input
+                  id="acc-email"
+                  name="email"
+                  type="email"
+                  value={accountData.email}
+                  onChange={handleAccountChange}
+                  required
+                />
               </div>
             </CardContent>
             <div className="px-6 pb-6 pt-2">
-              <Button type="submit" disabled={updateAccount.isPending} data-testid="button-save-account">
-                {updateAccount.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+              <Button
+                type="submit"
+                disabled={updateAccount.isPending}
+                data-testid="button-save-account"
+              >
+                {updateAccount.isPending ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="mr-2 h-4 w-4" />
+                )}
                 Save Account
               </Button>
             </div>
@@ -262,28 +463,61 @@ export default function StudentProfilePage() {
         <Card>
           <form onSubmit={handlePasswordSubmit}>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg"><KeyRound className="h-5 w-5" /> Change Password</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <KeyRound className="h-5 w-5" /> Change Password
+              </CardTitle>
               <CardDescription>Update your account password.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="currentPassword">Current Password</Label>
-                <Input id="currentPassword" name="currentPassword" type="password" value={passwordData.currentPassword} onChange={handlePasswordChange} required />
+                <Input
+                  id="currentPassword"
+                  name="currentPassword"
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={handlePasswordChange}
+                  required
+                />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="newPassword">New Password</Label>
-                  <Input id="newPassword" name="newPassword" type="password" value={passwordData.newPassword} onChange={handlePasswordChange} required minLength={6} />
+                  <Input
+                    id="newPassword"
+                    name="newPassword"
+                    type="password"
+                    value={passwordData.newPassword}
+                    onChange={handlePasswordChange}
+                    required
+                    minLength={6}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <Input id="confirmPassword" name="confirmPassword" type="password" value={passwordData.confirmPassword} onChange={handlePasswordChange} required minLength={6} />
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    value={passwordData.confirmPassword}
+                    onChange={handlePasswordChange}
+                    required
+                    minLength={6}
+                  />
                 </div>
               </div>
             </CardContent>
             <div className="px-6 pb-6 pt-2">
-              <Button type="submit" disabled={changePassword.isPending} data-testid="button-change-password">
-                {changePassword.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <KeyRound className="mr-2 h-4 w-4" />}
+              <Button
+                type="submit"
+                disabled={changePassword.isPending}
+                data-testid="button-change-password"
+              >
+                {changePassword.isPending ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <KeyRound className="mr-2 h-4 w-4" />
+                )}
                 Change Password
               </Button>
             </div>

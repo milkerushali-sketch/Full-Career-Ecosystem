@@ -1213,10 +1213,18 @@ components:
           type: ["string", "null"]
         photoUrl:
           type: ["string", "null"]
+        departmentId:
+          type: ["integer", "null"]
 
     StudentProfileUpdate:
       type: object
       properties:
+        rollNo:
+          type: string
+        batch:
+          type: string
+        departmentId:
+          type: ["integer", "null"]
         phone:
           type: string
         address:
@@ -1283,7 +1291,18 @@ components:
 
     StudentDashboard:
       type: object
-      required: [profile, readinessScore, skillCount, projectCount, certificationCount, internshipCount, upcomingInterviews, recentNotifications, eligibleCompanyCount]
+      required:
+        [
+          profile,
+          readinessScore,
+          skillCount,
+          projectCount,
+          certificationCount,
+          internshipCount,
+          upcomingInterviews,
+          recentNotifications,
+          eligibleCompanyCount,
+        ]
       properties:
         profile:
           $ref: "#/components/schemas/StudentProfile"
@@ -1538,7 +1557,8 @@ components:
     # ─── AI Analysis ──────────────────────────────────────────────────────────
     AIAnalysis:
       type: object
-      required: [readinessScore, resumeScore, skillGaps, recommendations, strengths]
+      required:
+        [readinessScore, resumeScore, skillGaps, recommendations, strengths]
       properties:
         readinessScore:
           type: number
@@ -1650,7 +1670,19 @@ components:
 
     GeneratedResume:
       type: object
-      required: [contact, summary, education, skillsByCategory, experience, projects, certifications, codingProfiles, atsTips, formattedText]
+      required:
+        [
+          contact,
+          summary,
+          education,
+          skillsByCategory,
+          experience,
+          projects,
+          certifications,
+          codingProfiles,
+          atsTips,
+          formattedText,
+        ]
       properties:
         contact:
           $ref: "#/components/schemas/ResumeContact"
@@ -1690,7 +1722,18 @@ components:
 
     ResumeUploadAnalysis:
       type: object
-      required: [fileName, atsScore, formattingScore, keywordScore, matchedKeywords, missingKeywords, formattingIssues, recommendations, extractedWordCount]
+      required:
+        [
+          fileName,
+          atsScore,
+          formattingScore,
+          keywordScore,
+          matchedKeywords,
+          missingKeywords,
+          formattingIssues,
+          recommendations,
+          extractedWordCount,
+        ]
       properties:
         fileName:
           type: string
@@ -1929,7 +1972,17 @@ components:
     # ─── Interview ────────────────────────────────────────────────────────────
     Interview:
       type: object
-      required: [id, studentId, studentName, companyId, companyName, scheduledAt, type, status]
+      required:
+        [
+          id,
+          studentId,
+          studentName,
+          companyId,
+          companyName,
+          scheduledAt,
+          type,
+          status,
+        ]
       properties:
         id:
           type: integer
@@ -2013,7 +2066,17 @@ components:
     # ─── Analytics ────────────────────────────────────────────────────────────
     OfficerDashboard:
       type: object
-      required: [totalStudents, placedStudents, activeJobs, scheduledInterviews, companiesVisited, avgReadinessScore, departmentStats, recentInterviews]
+      required:
+        [
+          totalStudents,
+          placedStudents,
+          activeJobs,
+          scheduledInterviews,
+          companiesVisited,
+          avgReadinessScore,
+          departmentStats,
+          recentInterviews,
+        ]
       properties:
         totalStudents:
           type: integer
@@ -2038,7 +2101,16 @@ components:
 
     PlacementStats:
       type: object
-      required: [totalPlaced, placementRate, avgPackage, topPackage, batchStats, departmentBreakdown, monthlyTrend]
+      required:
+        [
+          totalPlaced,
+          placementRate,
+          avgPackage,
+          topPackage,
+          batchStats,
+          departmentBreakdown,
+          monthlyTrend,
+        ]
       properties:
         totalPlaced:
           type: integer
@@ -2127,7 +2199,17 @@ components:
 
     StudentDetail:
       type: object
-      required: [profile, academics, skills, projects, internships, certifications, codingProfiles, aiAnalysis]
+      required:
+        [
+          profile,
+          academics,
+          skills,
+          projects,
+          internships,
+          certifications,
+          codingProfiles,
+          aiAnalysis,
+        ]
       properties:
         profile:
           $ref: "#/components/schemas/StudentProfile"
@@ -2194,7 +2276,15 @@ components:
     # ─── Admin Dashboard ──────────────────────────────────────────────────────
     AdminDashboard:
       type: object
-      required: [totalUsers, totalStudents, totalOfficers, totalCompanies, totalDepartments, systemHealth]
+      required:
+        [
+          totalUsers,
+          totalStudents,
+          totalOfficers,
+          totalCompanies,
+          totalDepartments,
+          systemHealth,
+        ]
       properties:
         totalUsers:
           type: integer
