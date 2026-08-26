@@ -4,8 +4,9 @@ A student career development and placement management system. Students manage
 their profile, apply to jobs, and track interviews; placement officers and
 admins manage companies, job postings, and the placement pipeline.
 
-This project was built on Replit as a **pnpm monorepo**. This README covers
-running it locally in VSCode (or any other editor/terminal).
+This project is a **pnpm monorepo**. It contains the PlacePro frontend, API,
+database schema, and generated API contracts. The instructions below cover
+running it locally in VSCode on Windows, macOS, or Linux.
 
 ## Project structure
 
@@ -21,8 +22,8 @@ lib/
   api-client-react/    Typed React Query hooks generated from the OpenAPI spec
 ```
 
-The frontend and API are two separate services that you run in two separate
-terminals; the frontend proxies `/api/*` requests to the API server.
+The frontend proxies `/api/*` requests to the API server. The root `dev`
+command starts both services together.
 
 ## Prerequisites
 
@@ -40,8 +41,8 @@ IntelliSense**.
 ## 1. Install dependencies
 
 ```bash
-git clone <your-repo-url>
-cd <repo-folder>
+git clone https://github.com/milkerushali-sketch/Full-Career-Ecosystem.git
+cd Full-Career-Ecosystem
 pnpm install
 ```
 
@@ -51,11 +52,10 @@ folder.
 
 ## 2. Configure environment variables
 
-Copy the example env files and fill them in:
+Copy the API example env file and fill in your local PostgreSQL credentials:
 
-```bash
-cp artifacts/api-server/.env.example artifacts/api-server/.env
-cp artifacts/placement-system/.env.example artifacts/placement-system/.env
+```powershell
+Copy-Item artifacts/api-server/.env.example artifacts/api-server/.env
 ```
 
 Edit `artifacts/api-server/.env`:
@@ -68,23 +68,20 @@ Edit `artifacts/api-server/.env`:
   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
   ```
 
-`artifacts/placement-system/.env` already has working defaults for local dev
-— no changes needed unless you want different ports.
+The frontend has working local defaults and does not require an `.env` file.
+To override them, create `artifacts/placement-system/.env` from its example.
 
-> These `.env` files are **not** loaded automatically (the project has no
-> dotenv dependency). Load them into your shell before running each service —
-> the run commands below do this for you with `export $(...)` / `set -a`.
-> On Windows, run these commands from **WSL** or **Git Bash**, not
-> PowerShell/cmd.
+The root `pnpm run dev` command loads both `.env` files automatically. Never
+commit a real `.env` file; only the `.env.example` files belong in Git.
 
 ## 3. Set up the database
 
-With `DATABASE_URL` set (see step 2), push the schema and load demo data:
+With `DATABASE_URL` set in `artifacts/api-server/.env`, push the schema and
+load demo data:
 
-```bash
-set -a; source artifacts/api-server/.env; set +a
+```powershell
 pnpm --filter @workspace/db run push
-npx tsx artifacts/api-server/src/lib/seed.ts
+pnpm --filter @workspace/api-server exec tsx src/lib/seed.ts
 ```
 
 The seed script is safe to re-run — it uses `onConflictDoNothing()`. It
@@ -99,27 +96,32 @@ creates demo accounts:
 ## 4. Run the app
 
 Once `artifacts/api-server/.env` contains a valid `DATABASE_URL` and
-`SESSION_SECRET`, start both services with one command from the repository
-root:
+`SESSION_SECRET`, start the complete application with one command from the
+repository root:
 
 ```powershell
 pnpm run dev
 ```
 
 The command starts the API on `http://localhost:8080` and the frontend on
-`http://localhost:5173`. Press `Ctrl+C` once to stop both services.
+`http://localhost:5173`. Press `Ctrl+C` to stop services started by the
+command. If either port is already in use by a running instance, the launcher
+reuses that service instead of starting a duplicate process.
 
 If the environment file is not configured yet, the command prints the missing
 variable and exits without starting an incomplete app.
 
-### Manual two-terminal startup
+### Manual startup
 
-Open **two terminals** in VSCode (`` Ctrl/Cmd+Shift+` ``, then split):
+If you need to run services separately, use two terminals. On PowerShell, set
+the environment variables before each command:
 
 **Terminal 1 — API server:**
 
-```bash
-set -a; source artifacts/api-server/.env; set +a
+```powershell
+$env:DATABASE_URL = (Get-Content artifacts/api-server/.env | Where-Object { $_ -match '^DATABASE_URL=' }).Split('=', 2)[1].Trim('"')
+$env:SESSION_SECRET = (Get-Content artifacts/api-server/.env | Where-Object { $_ -match '^SESSION_SECRET=' }).Split('=', 2)[1].Trim('"')
+$env:PORT = "8080"
 pnpm --filter @workspace/api-server run dev
 ```
 
@@ -127,8 +129,10 @@ Runs at `http://localhost:8080` (health check: `/api/healthz`).
 
 **Terminal 2 — frontend:**
 
-```bash
-set -a; source artifacts/placement-system/.env; set +a
+```powershell
+$env:PORT = "5173"
+$env:BASE_PATH = "/"
+$env:API_PROXY_TARGET = "http://localhost:8080"
 pnpm --filter @workspace/placement-system run dev
 ```
 
@@ -140,6 +144,7 @@ with one of the demo accounts above.
 ```bash
 pnpm run typecheck                                        # typecheck everything
 pnpm run build                                             # typecheck + build everything
+pnpm run dev                                               # start API and frontend together
 pnpm --filter @workspace/db run push                       # push DB schema changes
 pnpm --filter @workspace/api-spec run codegen               # regenerate API hooks/schemas from the OpenAPI spec
 ```
@@ -151,10 +156,12 @@ pnpm --filter @workspace/api-spec run codegen               # regenerate API hoo
   inside an `artifacts/*` folder).
 - **`relation "users" does not exist"` / login fails with a 500** — the
   database schema hasn't been pushed and/or seeded yet. Run step 3 above.
-- **`PORT environment variable is required but was not provided`** — you
-  started a service without loading its `.env` file first; re-run the
-  `set -a; source ...; set +a` line before the `pnpm --filter ... run dev`
-  command.
+- **`EADDRINUSE` / port already in use** — another instance is already
+  running. Use `pnpm run dev`; it reuses services already listening on ports
+  5173 and 8080. To find a process on Windows, run
+  `Get-NetTCPConnection -LocalPort 5173,8080 -State Listen`.
+- **`spawn EINVAL` on Windows** — use the root `pnpm run dev` command. The
+  launcher handles Windows `pnpm.cmd` execution automatically.
 - **Frontend loads but API calls fail / 404 on `/api/...`** — make sure the
   API server is running and that `API_PROXY_TARGET` in
   `artifacts/placement-system/.env` matches the API server's `PORT`.
