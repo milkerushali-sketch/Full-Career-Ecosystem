@@ -3,7 +3,7 @@ services:
     name: placepro-api
     runtime: node
     plan: free
-    buildCommand: pnpm -w run build:api:deploy
+    buildCommand: pnpm install --frozen-lockfile && pnpm --filter @workspace/placement-system run build && pnpm -w run build:api:deploy
     startCommand: pnpm --filter @workspace/api-server run start
     healthCheckPath: /api/healthz
     envVars:
