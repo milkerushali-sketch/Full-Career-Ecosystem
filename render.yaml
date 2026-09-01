@@ -2,11 +2,15 @@ services:
   - type: web
     name: placepro-api
     runtime: node
+    plan: free
     buildCommand: pnpm -w run build:api:deploy
     startCommand: pnpm --filter @workspace/api-server run start
+    healthCheckPath: /api/healthz
     envVars:
       - key: NODE_VERSION
         value: 24.14.1
+      - key: PORT
+        value: 8080
       - key: DATABASE_URL
         sync: false
       - key: SESSION_SECRET
@@ -15,6 +19,7 @@ services:
   - type: web
     name: placepro-frontend
     runtime: static
+    plan: free
     buildCommand: pnpm install --frozen-lockfile && pnpm --filter @workspace/placement-system run build
     staticPublishPath: artifacts/placement-system/dist/public
     envVars:
@@ -25,7 +30,7 @@ services:
     routes:
       - type: rewrite
         source: /api/*
-        destination: https://full-career-ecosystem.onrender.com/api/*
+        destination: https://placepro-api.onrender.com/api/*
       - type: rewrite
         source: /*
         destination: /index.html
